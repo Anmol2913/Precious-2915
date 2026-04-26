@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Precious 💖</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1a001f, #000000);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .glass-card {
+      width: 350px;
+      padding: 40px;
+      border-radius: 25px;
+
+      /* Glass Effect */
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+      box-shadow: 
+        0 8px 32px rgba(255, 0, 150, 0.3),
+        inset 0 0 10px rgba(255, 255, 255, 0.1);
+
+      color: white;
+      text-align: center;
+      transition: 0.4s;
+    }
+
+    .glass-card:hover {
+      transform: scale(1.05);
+      box-shadow: 
+        0 12px 40px rgba(255, 0, 150, 0.6),
+        inset 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    h1 {
+      color: pink;
+      text-shadow: 0 0 20px red;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(45deg, pink, red);
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="glass-card">
+  <h1>Hey Precious 💎</h1>
+
+  <p>
+    Your brown eyes ✨<br>
+    and your long beautiful hair 🌙<br><br>
+
+    You are not just Pooja...<br>
+    You are my **Precious** ❤️
+  </p>
+
+  <button onclick="alert('I miss you ❤️')">Tap Me 💌</button>
+</div>
+
+</body>
+</html>
