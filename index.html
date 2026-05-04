@@ -1,195 +1,198 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Precious 💖</title>
+<title>Our Story 💖</title>
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: radial-gradient(circle at center, #2b0033, #000000);
-      font-family: 'Segoe UI', sans-serif;
-      overflow-x: hidden;
-      color: white;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:black;
+  color:white;
+  text-align:center;
+}
 
-    .glass-card {
-      width: 360px;
-      padding: 40px;
-      border-radius: 25px;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.2);
-      text-align: center;
-      box-shadow: 0 0 50px rgba(255,0,150,0.7);
-      margin: 20px;
-      animation: fadeIn 0.8s ease;
-    }
+.card{
+  width:90%;
+  max-width:400px;
+  margin:20px auto;
+  padding:20px;
+  border-radius:15px;
+  background:rgba(255,255,255,0.08);
+}
 
-    @keyframes fadeIn {
-      from {opacity:0; transform:translateY(20px);}
-      to {opacity:1; transform:translateY(0);}
-    }
+input{
+  padding:10px;
+  border-radius:10px;
+  border:none;
+}
 
-    h1,h3 {
-      color: #ff99cc;
-      text-shadow: 0 0 20px #ff0066;
-    }
+button{
+  margin-top:10px;
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  background:pink;
+}
 
-    button {
-      margin-top: 15px;
-      padding: 12px 25px;
-      border-radius: 20px;
-      border: none;
-      background: linear-gradient(45deg, #ff4da6, #ff0066);
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 0 15px #ff4da6;
-    }
+/* GATES */
+.gate{
+  position:fixed;
+  top:0;
+  width:50%;
+  height:100%;
+  background:black;
+  z-index:999;
+  transition:1s;
+}
+.left{left:0;}
+.right{right:0;}
+.openL{transform:translateX(-100%);}
+.openR{transform:translateX(100%);}
 
-    input {
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      text-align: center;
-      outline: none;
-    }
+/* FLASH */
+.flash{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:white;
+  opacity:0;
+  z-index:998;
+}
+.flash.active{
+  animation:flash 0.8s;
+}
+@keyframes flash{
+  0%{opacity:1;}
+  100%{opacity:0;}
+}
 
-    .particle {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: pink;
-      border-radius: 50%;
-      animation: float linear infinite;
-    }
-
-    @keyframes float {
-      from { transform: translateY(100vh); opacity: 1; }
-      to { transform: translateY(-10vh); opacity: 0; }
-    }
-  </style>
+/* HEART */
+.heart{
+  position:fixed;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{transform:translateY(100vh);opacity:0;}
+}
+</style>
 </head>
 
 <body>
 
-<!-- HOME -->
-<div class="glass-card">
-  <h1>Hey Precious 💎</h1>
-  <p>✨ Tap below... something special is waiting for you 💖</p>
-  <button onclick="start()">Tap Me 💌</button>
-</div>
+<h2>💖 Our Story 💖</h2>
+
+<div class="gate left" id="leftGate"></div>
+<div class="gate right" id="rightGate"></div>
+<div class="flash" id="flash"></div>
 
 <div id="container"></div>
 
 <script>
 
-// particles
-for(let i=0;i<40;i++){
-  let p=document.createElement("div");
-  p.className="particle";
-  p.style.left=Math.random()*100+"%";
-  p.style.animationDuration=(4+Math.random()*4)+"s";
-  document.body.appendChild(p);
+let step=0;
+
+let codes=[
+"mulakat","anjaan","squishy",
+"confession","memory","first blush","forever destination"
+];
+
+let stories=[
+"📅 28 August 2024<br><br>Ek simple hello… aur story start hui ❤️",
+"Strangers… but special 😄💬",
+"Feelings real hone lagi ❤️",
+"Wo 'yes' ek decision tha 💎",
+"Same school… but late mile 💖",
+"12 Oct… perfect day 💖🍦🎬",
+"Ye kahani khatam nahi hogi ❤️"
+];
+
+// INPUT
+function createInput(){
+let div=document.createElement("div");
+div.className="card";
+
+div.innerHTML=`
+Enter Code<br>
+<input id="input${step}">
+<br>
+<button onclick="check()">Unlock</button>
+`;
+
+container.appendChild(div);
 }
 
-let step = 0;
+// SHOW STORY
+function showStory(text){
+let div=document.createElement("div");
+div.className="card";
 
-function scrollToBottom(){
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth"
-  });
+typeEffect(div,text);
+
+container.appendChild(div);
+heartRain();
 }
 
-function start(){
-  addInput();
+// TYPE EFFECT
+function typeEffect(el,text){
+let i=0;
+let temp="";
+function type(){
+if(i<text.length){
+temp+=text[i];
+el.innerHTML=temp;
+i++;
+setTimeout(type,20);
+}
+}
+type();
 }
 
-function addInput(){
-  let div = document.createElement("div");
-  div.className="glass-card";
-
-  div.innerHTML = `
-    <h3>🔐 Enter Secret Code</h3>
-    <input type="text" id="input${step}" placeholder="Type here...">
-    <br>
-    <button onclick="check()">Unlock 💖</button>
-  `;
-
-  document.getElementById("container").appendChild(div);
-  scrollToBottom();
-}
-
-function showMessage(text){
-  let div = document.createElement("div");
-  div.className="glass-card";
-  div.innerHTML = text;
-  document.getElementById("container").appendChild(div);
-  scrollToBottom();
-}
-
+// CHECK
 function check(){
-  let value = document.getElementById(`input${step}`).value.toLowerCase();
+let val=document.getElementById(`input${step}`).value.toLowerCase();
 
-  if(step===0 && value==="precious"){
-    showMessage("💖 Hey Precious 💎<br><br>You are not just special ...<br>You are Precious ...<br>Your beautiful brown eyes ✨ feel like home,and your long hair flowing like magic 🌙 ❤️✨");
-    step++;
-    addInput();
-  }
+if(val===codes[step]){
 
-  else if(step===1 && value==="pooja"){
-    showMessage("✨ 12 October 2024 ✨<br><br>A day that quietly changed everything for me ❤️🌙");
-    step++;
-    addInput();
-  }
+flash.classList.add("active");
 
-  else if(step===2 && value==="anmol"){
-    showMessage("💫 Everything somehow leads back to one name...<br><br><span style='font-size:28px;color:#ff66cc;'>ANMOL 💎</span><br><br>The one who genuinely cares for you ❤️");
-    step++;
-    addInput();
-  }
+setTimeout(()=>{
+leftGate.classList.add("openL");
+rightGate.classList.add("openR");
+},200);
 
-  else if(step===3 && value==="2915"){
-    showMessage(`
-      🎉✨ Wishing you all the very best 💖<br><br>
+setTimeout(()=>{
+showStory(stories[step]);
+step++;
+if(step<codes.length) createInput();
 
-May your hard work shine through ✨<br>
-in both your internal exams 📚<br>
-and your final AKTU exams 🎓💫<br><br>
+setTimeout(()=>{
+leftGate.classList.remove("openL");
+rightGate.classList.remove("openR");
+flash.classList.remove("active");
+},1200);
 
-Believe in yourself 🌸<br>
-Stay calm, stay confident 💖<br>
-and keep smiling no matter what 😊✨<br><br>
+},800);
 
-<span style="color:#ff99cc;">With all my good wishes,</span><br>
-<b style="font-size:20px;">Anmol </b>
-    `);
-
-    // glitter effect
-    for(let i=0;i<80;i++){
-      let g=document.createElement("div");
-      g.className="particle";
-      g.style.background="gold";
-      g.style.width="4px";
-      g.style.height="4px";
-      g.style.left=Math.random()*100+"%";
-      g.style.animationDuration=(2+Math.random()*3)+"s";
-      document.body.appendChild(g);
-    }
-
-    step++;
-  }
-
-  else{
-    alert("❌ Wrong code... try again 😜");
-  }
+}else{
+alert("Wrong code 😜");
 }
+}
+
+// HEART
+function heartRain(){
+for(let i=0;i<15;i++){
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="💖";
+h.style.left=Math.random()*100+"%";
+h.style.fontSize="20px";
+h.style.animationDuration="3s";
+document.body.appendChild(h);
+}
+}
+
+createInput();
 
 </script>
 
